@@ -11,9 +11,10 @@ galleryContainer.addEventListener('click', onGalleryContainerClick);
 
 function createGalleryMarkup(galleryItems) {
     return galleryItems
-        .map(({ preview, original, description }) => 
-                `< div class="gallery__item" >
-                    <a class="gallery__link" href="large-image.jpg">
+        .map(({ preview, original, description }) => {
+            return `
+                <div class="gallery__item">
+                    <a class="gallery__link" href="${original}">
                         <img
                             class="gallery__image"
                             src="${preview}"
@@ -21,15 +22,21 @@ function createGalleryMarkup(galleryItems) {
                             alt="${description}"
                         />
                     </a>
-                </div > `          
-            )
+                </div >
+                `;
+            })
         .join('');
 }
 
 function onGalleryContainerClick(evt) {
-    const isGalleryItem = evt.target.classList.contains('gallery__item');
-    if (!isGalleryItem) {
+    evt.preventDefault();
+
+    if (!evt.target.classList.contains('gallery__image')) {
         return;
     }
     
+    
+    const instance = basicLightbox.create(`${original}`)
+
+instance.show()
 }
