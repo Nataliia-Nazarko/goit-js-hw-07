@@ -33,10 +33,9 @@ function onGalleryContainerClick(evt) {
 
     if (!evt.target.classList.contains('gallery__image')) {
         return;
-    }
+    } 
     
-    
-    const instance = basicLightbox.create(`${original}`)
+    const originalImage = evt.target.dataset.source;
 
-instance.show()
+    basicLightbox.create(`<img src="${originalImage}"></img>`).show();
 }
