@@ -27,6 +27,7 @@ function createGalleryMarkup(galleryItems) {
             })
         .join('');
 }
+ 
 
 function onGalleryContainerClick(evt) {
     evt.preventDefault();
@@ -35,7 +36,35 @@ function onGalleryContainerClick(evt) {
         return;
     } 
     
-    const originalImage = evt.target.dataset.source;
+  modalShow(evt.target.dataset.source);
+}
 
-    basicLightbox.create(`<img src="${originalImage}"></img>`).show();
+let instance;
+function modalShow(src) {
+  instance = basicLightbox.create(
+    `<img src="${src}"></img>`,
+    {
+      onShow: instance => {
+        addListener();
+      },
+      onClose: instance => {
+        removeListener();
+      },
+    },
+  );
+  instance.show();
+}
+
+function addListener() {
+  window.addEventListener('keydown', onEscClick);
+}
+
+function onEscClick(event) {
+  if (event.code === 'Escape') {
+    instance.close();
+  }
+}
+
+function removeListener() {
+  window.removeEventListener('keydown', onEscClick);
 }
